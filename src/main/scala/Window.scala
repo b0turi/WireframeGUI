@@ -18,7 +18,7 @@ object Window extends Frame
     addMouseListener(mouseInput)
     addMouseMotionListener(mouseInput)
 
-    val firstObj = new Image(50, 50)
+    val firstObj = new RoundedBox(50, 50, 20)
     addObject(firstObj)
 
     this.setVisible(true)

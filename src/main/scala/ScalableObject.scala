@@ -55,6 +55,7 @@ class ScalableObject extends WireframeObject{
       for (a <- 1 to 4) {
         g.fillOval(xPosition - controlRadius + _width * (a % 2), yPosition - controlRadius + _height * ((a - 1) / 2), controlRadius * 2, controlRadius * 2)
       }
+      g.drawOval(xPosition + _width/2 - controlRadius, yPosition + _height/2 - controlRadius, controlRadius * 2, controlRadius * 2)
     }
   }
 }
