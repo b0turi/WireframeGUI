@@ -35,12 +35,34 @@ object Window extends Frame
     objects = obj :: objects
   }
 
+  def establishPoints(mouseLocation:Point):Unit = {
+    for(obj <- objects) {
+      if(obj.isSelected) {
+        obj.establishSelectionPoint(mouseLocation)
+      }
+    }
+  }
+
   def updateFrame(mouseLocation:Point):Unit = {
     for(obj <- objects) {
-      if(obj.mouseInArea(mouseLocation) && !obj.isSelected) {
+      if(!obj.isSelected && obj.mouseInArea(mouseLocation)) {
         obj.select()
-      }else if(obj.isSelected) {
+      }else if(obj.isSelected && !obj.mouseInArea(mouseLocation)) {
         obj.deselect()
+      }
+    }
+    paint(getGraphics)
+  }
+
+  def moveSelected(mouseLocation:Point, lastMouseLocation:Point):Unit = {
+    val xDifference = mouseLocation.x - lastMouseLocation.x
+    val yDifference = mouseLocation.y - lastMouseLocation.y
+
+    for(obj <-  objects) {
+      if(obj.isSelected && obj.selectionPoint == 0) {
+        obj.move(xDifference, yDifference)
+      } else if(obj.isSelected && obj.selectionPoint != 0) {
+        obj.scale(xDifference, yDifference)
       }
     }
     paint(getGraphics)
