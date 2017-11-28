@@ -18,7 +18,7 @@ object Window extends Frame
     addMouseListener(mouseInput)
     addMouseMotionListener(mouseInput)
 
-    val firstObj = new RoundedBox(50, 50, 20)
+    val firstObj = new Slider(100, 1)
     addObject(firstObj)
 
     this.setVisible(true)

@@ -1,13 +1,13 @@
 import java.awt.{Color, Graphics, Point}
-class ScalableObject extends WireframeObject{
-  private var xScalable = true
-  private var yScalable = true
+abstract class ScalableObject extends WireframeObject{
+  protected var xScalable = true
+  protected var yScalable = true
 
   private var scaling = false
 
   private val controlRadius = 5
   def scale(xAmount:Int, yAmount:Int):Unit = {
-    if(xScalable) {
+    if(xScalable && selectionPoint <= 4) {
       _width += xAmount * scaleDiff.x
       xPosition += xAmount * ((1 + selectionPoint) % 2)
     }
@@ -49,7 +49,6 @@ class ScalableObject extends WireframeObject{
 
   override def draw(g: Graphics): Unit = {
     if(selected) {
-      println("drawing")
       //Draw the controls to scale the object
       g.setColor(Color.GRAY)
       for (a <- 1 to 4) {
