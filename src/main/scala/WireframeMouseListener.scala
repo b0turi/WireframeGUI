@@ -3,13 +3,19 @@ import java.awt.Point
 
 class WireframeMouseListener extends MouseListener with MouseMotionListener {
   var lastMousePosition:Point = new Point()
+  var startDrag:Point = new Point()
+  var endDrag:Point = new Point()
   override def mouseExited(e: MouseEvent): Unit = {}
 
   override def mousePressed(e: MouseEvent): Unit = {
-    Window.establishPoints(e.getPoint)
+    Window.setTargets(e.getPoint)
+    startDrag = e.getPoint
   }
 
-  override def mouseReleased(e: MouseEvent): Unit = {}
+  override def mouseReleased(e: MouseEvent): Unit = {
+    endDrag = e.getPoint
+    Window.groupSelect(startDrag, endDrag)
+  }
 
   override def mouseEntered(e: MouseEvent): Unit = {}
 

@@ -16,8 +16,8 @@ class ComboBox(choices:List[String]) extends WireframeObject {
   val padding = 5
   val charSize = 10
 
-  val triangleWidth = 10
-  val triangleHeight = 14
+  triangleWidth = 10
+  triangleHeight = 14
 
   override def select():Unit = {
     super.select()
@@ -34,14 +34,8 @@ class ComboBox(choices:List[String]) extends WireframeObject {
 
     val selectionLength = choices(current).length * charSize
 
-    g.fillPolygon(Array[Int](xPosition + _width - padding - triangleWidth,
-                            xPosition + _width - padding,
-                            xPosition + _width - padding - triangleWidth / 2,
-                            xPosition + _width - padding - triangleWidth),
-                  Array[Int](yPosition + padding,
-                            yPosition + padding,
-                            yPosition + padding + triangleHeight,
-                            yPosition + padding), 3)
+    val relativePoint:Point = new Point(xPosition + _width - padding - triangleWidth, padding)
+    drawTriangle(g, padding, false, relativePoint)
 
     g.drawRoundRect(xPosition, yPosition, _width, _height, _height/4, _height/4)
     g.fillRect(xPosition + padding, yPosition + padding, selectionLength, charSize)

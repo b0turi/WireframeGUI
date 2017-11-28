@@ -9,10 +9,14 @@ object TextObject {
 class TextObject(width:Int, height:Int, align:TextObject.Alignment.Value) extends ScalableObject {
   private val text = "Lorem ipsum dolor sit amet et delectus accommodare his consul coplosae legendos at vix ad putent delectus delicata usu. Vidit dissentiet eos cu euem an"
   private var alignment = align
-  protected val fontSize = 16
+
 
   protected val padding = 3
   protected var textVisible = true
+
+  val fontSize = 16
+  var offset = 0
+  var contentHeight = 0
 
   _width = width
   _height = height
@@ -20,12 +24,14 @@ class TextObject(width:Int, height:Int, align:TextObject.Alignment.Value) extend
   def setAlignment(align:TextObject.Alignment.Value):Unit = { alignment = align }
 
   override def draw(g: Graphics): Unit = {
+
     if(textVisible) {
       g.setFont(new Font("Sans", 0, fontSize))
       var lines:List[String] = getLines(g)
-      for(a <- lines.indices) {
+      contentHeight = lines.length * (fontSize + padding)
+      for(a <- offset to lines.length - 1) {
         var lineWidth = g.getFontMetrics.stringWidth(lines(a))
-        val lineYPosition = yPosition + (1 + a) * (fontSize + padding)
+        val lineYPosition = yPosition + (1 + a - offset) * (fontSize + padding)
         if(lineYPosition < yPosition + _height) {
           if(alignment == TextObject.Alignment.JUSTIFY) {
             lines = lines.patch(a, Seq(justify(lineWidth, lines(a), g)), 1)

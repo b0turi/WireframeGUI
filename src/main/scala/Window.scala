@@ -18,7 +18,9 @@ object Window extends Frame
     addMouseListener(mouseInput)
     addMouseMotionListener(mouseInput)
 
-    val firstObj = new Headline("asdf as qwer", "asdf qwe fad")
+    val textObj = new Paragraph(200, 200, TextObject.Alignment.LEFT)
+    addObject(textObj)
+    val firstObj = new ScrollBar(100, textObj)
     addObject(firstObj)
 
     this.setVisible(true)
@@ -35,7 +37,7 @@ object Window extends Frame
     objects = obj :: objects
   }
 
-  def establishPoints(mouseLocation:Point):Unit = {
+  def setTargets(mouseLocation:Point):Unit = {
     for(obj <- objects) {
       if(obj.isSelected) {
         obj.calculateMouseTarget(mouseLocation)
@@ -63,6 +65,15 @@ object Window extends Frame
         obj.move(xDifference, yDifference)
       } else if(obj.isSelected && obj.mouseTarget != 0) {
         obj.interact(xDifference, yDifference)
+      }
+    }
+    paint(getGraphics)
+  }
+
+  def groupSelect(topLeft:Point, bottomRight:Point):Unit = {
+    for(obj <- objects) {
+      if((topLeft.x to bottomRight.x contains obj.center.x) && (topLeft.y to bottomRight.y contains obj.center.y)) {
+        obj.select()
       }
     }
     paint(getGraphics)

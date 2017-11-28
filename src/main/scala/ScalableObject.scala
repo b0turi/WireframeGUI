@@ -3,6 +3,8 @@ abstract class ScalableObject extends WireframeObject{
   protected var xScalable = true
   protected var yScalable = true
 
+
+
   private var scaling = false
 
   override def interact(xAmount:Int, yAmount:Int):Unit = {
@@ -55,4 +57,7 @@ abstract class ScalableObject extends WireframeObject{
     }
     super.draw(g)
   }
+
+
+
 }

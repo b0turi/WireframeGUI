@@ -7,6 +7,9 @@ abstract class WireframeObject {
   protected var _width = 0
   protected var _height = 0
 
+  protected var triangleWidth = 0
+  protected var triangleHeight = 0
+
   private var locked = false
   protected var selected = false
 
@@ -45,4 +48,27 @@ abstract class WireframeObject {
 
   def pointInRange(x1:Int, x2:Int, y1:Int, y2:Int, pt:Point):Boolean = (x1 to x2 contains pt.x) && (y1 to y2 contains pt.y)
 
+  def drawTriangle(g:Graphics, padding:Int, facingUp:Boolean, relativePosition: Point):Unit = {
+    if (facingUp) {
+      g.fillPolygon(Array[Int](xPosition + relativePosition.x,
+        xPosition + relativePosition.x + triangleWidth,
+        xPosition + relativePosition.x + triangleWidth / 2,
+        xPosition + relativePosition.x),
+        Array[Int](yPosition + relativePosition.y + triangleHeight,
+          yPosition + relativePosition.y + triangleHeight,
+          yPosition + relativePosition.y,
+          yPosition + relativePosition.y + triangleHeight), 3)
+    } else {
+      g.fillPolygon(Array[Int](xPosition + relativePosition.x,
+        xPosition + relativePosition.x + triangleWidth,
+        xPosition + relativePosition.x + triangleWidth / 2,
+        xPosition + relativePosition.x),
+        Array[Int](yPosition + relativePosition.y,
+          yPosition + relativePosition.y,
+          yPosition + relativePosition.y + triangleHeight,
+          yPosition + relativePosition.y), 3)
+    }
+  }
+
+  def center:Point = new Point(xPosition + _width/2, yPosition + _height/2)
 }
