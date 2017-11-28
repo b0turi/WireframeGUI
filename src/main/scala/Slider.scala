@@ -11,15 +11,15 @@ class Slider (width:Int, percentage:Double) extends BarObject(width, percentage)
     super.draw(g)
   }
 
-  override def establishSelectionPoint(mouse: Point): Unit = {
-    super.establishSelectionPoint(mouse)
+  override def calculateMouseTarget(mouse: Point): Unit = {
+    super.calculateMouseTarget(mouse)
     if(pointInRange(circlePosition - sliderRadius, circlePosition + sliderRadius, yPosition, yPosition + _height, mouse)) {
-      selectionPoint = 5
+      mouseTarget = 5
     }
   }
 
-  override def scale(xAmount: Int, yAmount: Int): Unit = {
-    if(selectionPoint == 5) {
+  override def interact(xAmount: Int, yAmount: Int): Unit = {
+    if(mouseTarget == 5) {
       _percentage = ((_width * _percentage) + xAmount) / _width
       if(_percentage < 0) {
         _percentage = 0
@@ -27,6 +27,6 @@ class Slider (width:Int, percentage:Double) extends BarObject(width, percentage)
       if(_percentage > 1)
         _percentage = 1
     }
-    super.scale(xAmount, yAmount)
+    super.interact(xAmount, yAmount)
   }
 }

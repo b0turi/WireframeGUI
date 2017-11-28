@@ -18,7 +18,7 @@ object Window extends Frame
     addMouseListener(mouseInput)
     addMouseMotionListener(mouseInput)
 
-    val firstObj = new Slider(100, 1)
+    val firstObj = new ComboBox(scala.List("First", "second", "really fuckin long string"))
     addObject(firstObj)
 
     this.setVisible(true)
@@ -38,7 +38,7 @@ object Window extends Frame
   def establishPoints(mouseLocation:Point):Unit = {
     for(obj <- objects) {
       if(obj.isSelected) {
-        obj.establishSelectionPoint(mouseLocation)
+        obj.calculateMouseTarget(mouseLocation)
       }
     }
   }
@@ -59,10 +59,10 @@ object Window extends Frame
     val yDifference = mouseLocation.y - lastMouseLocation.y
 
     for(obj <-  objects) {
-      if(obj.isSelected && obj.selectionPoint == 0) {
+      if(obj.isSelected && obj.mouseTarget == 0) {
         obj.move(xDifference, yDifference)
-      } else if(obj.isSelected && obj.selectionPoint != 0) {
-        obj.scale(xDifference, yDifference)
+      } else if(obj.isSelected && obj.mouseTarget != 0) {
+        obj.interact(xDifference, yDifference)
       }
     }
     paint(getGraphics)

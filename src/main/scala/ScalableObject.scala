@@ -5,26 +5,25 @@ abstract class ScalableObject extends WireframeObject{
 
   private var scaling = false
 
-  private val controlRadius = 5
-  def scale(xAmount:Int, yAmount:Int):Unit = {
-    if(xScalable && selectionPoint <= 4) {
+  override def interact(xAmount:Int, yAmount:Int):Unit = {
+    if(xScalable && mouseTarget <= 4) {
       _width += xAmount * scaleDiff.x
-      xPosition += xAmount * ((1 + selectionPoint) % 2)
+      xPosition += xAmount * ((1 + mouseTarget) % 2)
     }
     if(yScalable) {
       _height += yAmount * scaleDiff.y
-      yPosition += yAmount * (1 - ((selectionPoint - 1) / 2))
+      yPosition += yAmount * (1 - ((mouseTarget - 1) / 2))
     }
   }
 
   def scaleDiff:Point = {
     var outPoint = new Point
-    if(selectionPoint % 2 == 0) {
+    if(mouseTarget % 2 == 0) {
       outPoint.x = -1
     } else {
       outPoint.x = 1
     }
-    if(selectionPoint < 3) {
+    if(mouseTarget < 3) {
       outPoint.y = -1
     } else {
       outPoint.y = 1
@@ -33,18 +32,17 @@ abstract class ScalableObject extends WireframeObject{
     outPoint
   }
 
-  override def establishSelectionPoint(mouse: Point): Unit = {
-    selectionPoint = 0
+  override def calculateMouseTarget(mouse: Point): Unit = {
+    super.calculateMouseTarget(mouse)
 
     for(a <- 1 to 4) {
       if(pointInRange(xPosition + _width * (a % 2) - controlRadius,
                       xPosition + _width * (a % 2) + controlRadius,
                       yPosition + _height * ((a - 1) / 2) - controlRadius,
                       yPosition + _height * ((a - 1) / 2) + controlRadius, mouse)) {
-        selectionPoint = a
+        mouseTarget = a
       }
     }
-    println(selectionPoint)
   }
 
   override def draw(g: Graphics): Unit = {
@@ -54,7 +52,7 @@ abstract class ScalableObject extends WireframeObject{
       for (a <- 1 to 4) {
         g.fillOval(xPosition - controlRadius + _width * (a % 2), yPosition - controlRadius + _height * ((a - 1) / 2), controlRadius * 2, controlRadius * 2)
       }
-      g.drawOval(xPosition + _width/2 - controlRadius, yPosition + _height/2 - controlRadius, controlRadius * 2, controlRadius * 2)
     }
+    super.draw(g)
   }
 }
