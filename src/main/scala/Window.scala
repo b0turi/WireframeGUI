@@ -18,7 +18,7 @@ object Window extends Frame
     addMouseListener(mouseInput)
     addMouseMotionListener(mouseInput)
 
-    val firstObj = new ComboBox(scala.List("First", "second", "really fuckin long string"))
+    val firstObj = new TextObject(200, 200, TextObject.Alignment.JUSTIFY)
     addObject(firstObj)
 
     this.setVisible(true)
