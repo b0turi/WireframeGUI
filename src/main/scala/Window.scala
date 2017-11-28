@@ -4,8 +4,8 @@ import java.awt.event.{MouseListener, WindowAdapter, WindowEvent}
 
 object Window extends Frame
 {
-  final val WIDTH = 400
-  final val HEIGHT = 400
+  final val WIDTH = 600
+  final val HEIGHT = 600
 
   var objects:scala.List[WireframeObject] = scala.List()
 
@@ -18,10 +18,51 @@ object Window extends Frame
     addMouseListener(mouseInput)
     addMouseMotionListener(mouseInput)
 
-    val textObj = new Paragraph(200, 200, TextObject.Alignment.LEFT)
-    addObject(textObj)
-    val firstObj = new ScrollBar(100, textObj)
-    addObject(firstObj)
+    //Add all objects to the screen here
+
+    val text = new TextObject(200, 100, TextObject.Alignment.CENTER)
+    text.move(-280, -40)
+    addObject(text)
+
+    val progress = new ProgressBar(200, 0.25)
+    val furtherProgress = new ProgressBar(200, 0.75)
+
+    progress.move(-280, 80)
+    furtherProgress.move(-280, 110)
+
+    addObject(progress)
+    addObject(furtherProgress)
+
+    val paragraph = new Paragraph(200, 100, TextObject.Alignment.RIGHT)
+    paragraph.move(-280, 140)
+    addObject(paragraph)
+
+    val headline = new Headline("This is sample", "This is even more sample")
+    headline.move(-60, -260)
+    addObject(headline)
+
+    val slider = new Slider(200, 0.35)
+    slider.move(-60, -190)
+    addObject(slider)
+
+    val rounded = new RoundedBox(200, 200, 20)
+    rounded.move(-60, -140)
+    rounded.lock()
+    addObject(rounded)
+
+    val list = new ListObject(170, 180)
+    list.move(-60, -130)
+    addObject(list)
+
+    val scroll = new ScrollBar(180, list)
+    scroll.move(110, -130)
+    addObject(scroll)
+
+    val image = new Image(200, 200)
+    image.move(-280, -260)
+    addObject(image)
+
+
 
     this.setVisible(true)
   }

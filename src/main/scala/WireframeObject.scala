@@ -1,4 +1,4 @@
-import java.awt.{Graphics, Point}
+import java.awt.{Color, Graphics, Point}
 
 abstract class WireframeObject {
   protected var xPosition: Int = Window.WIDTH/2
@@ -14,18 +14,18 @@ abstract class WireframeObject {
   protected var selected = false
 
   private var annotations:Set[Annotation] = Set()
-  private var parent:Option[WireframeGroup] = Option.empty
 
   protected val controlRadius = 5
 
   var mouseTarget = 0
 
   def move(xDiff:Int, yDiff:Int):Unit = {
-    xPosition += xDiff
-    yPosition += yDiff
+      xPosition += xDiff
+      yPosition += yDiff
   }
 
   def draw(g:Graphics):Unit = {
+    g.setColor(Color.BLACK)
     if(selected) {
       g.drawOval(xPosition + _width/2 - controlRadius, yPosition + _height/2 - controlRadius, controlRadius * 2, controlRadius * 2)
     }
@@ -35,7 +35,9 @@ abstract class WireframeObject {
   def isSelected:Boolean = selected
 
   def select():Unit = {
-    selected = true
+    if(!locked) {
+      selected = true
+    }
   }
 
   def deselect():Unit = {
@@ -68,6 +70,12 @@ abstract class WireframeObject {
           yPosition + relativePosition.y + triangleHeight,
           yPosition + relativePosition.y), 3)
     }
+  }
+
+  def lock():Unit = { locked = true }
+  def unlock():Unit = {
+    locked = false
+    selected = true
   }
 
   def center:Point = new Point(xPosition + _width/2, yPosition + _height/2)

@@ -1,6 +1,6 @@
 import java.awt.{Font, Graphics}
 
-class Headline (title:String, subtitle:String) extends TextObject(100, 50, TextObject.Alignment.LEFT){
+class Headline (title:String, subtitle:String) extends TextObject(200, 100, TextObject.Alignment.LEFT){
   val titleFontSize = fontSize * 2
   textVisible = false
 
