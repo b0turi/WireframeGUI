@@ -18,7 +18,7 @@ object Window extends Frame
     addMouseListener(mouseInput)
     addMouseMotionListener(mouseInput)
 
-    val firstObj = new TextObject(200, 200, TextObject.Alignment.JUSTIFY)
+    val firstObj = new Headline("asdf as qwer", "asdf qwe fad")
     addObject(firstObj)
 
     this.setVisible(true)
